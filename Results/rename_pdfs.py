@@ -1,25 +1,28 @@
 import os
+import openpyxl
 
-def rename_pdfs_in_current_directory():
-    current_directory = r"D:\Desktop\Trash\ResultAuto\Results"
-    print(f"Current directory: {current_directory}")
-    
-    print("All files in directory:")
-    for file in os.listdir(current_directory):
-        print(file)
-    
-    pdf_files = [f for f in os.listdir(current_directory) if f.startswith("result_") and f.endswith(".pdf")]
-    print(f"PDF files to rename: {pdf_files}")
-    
-    for filename in pdf_files:
-        new_name = filename.replace("result_", "", 1)
-        old_file = os.path.join(current_directory, filename)
-        new_file = os.path.join(current_directory, new_name)
-        try:
-            os.rename(old_file, new_file)
-            print(f'Renamed: {old_file} to {new_file}')
-        except Exception as e:
-            print(f"Error renaming {old_file}: {str(e)}")
+def list_files_to_excel(directory_path):
+    # Create a new workbook and select the active sheet
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = "File List"
 
-if __name__ == "__main__":
-    rename_pdfs_in_current_directory()
+    # Add a header
+    sheet['A1'] = "File Name"
+
+    # Get all files in the directory
+    files = os.listdir(directory_path)
+
+    # Write file names to Excel
+    for index, file_name in enumerate(files, start=2):  # Start from row 2
+        sheet[f'A{index}'] = file_name
+
+    # Save the workbook
+    excel_file_name = "file_list.xlsx"
+    workbook.save(excel_file_name)
+    print(f"File list has been saved to {excel_file_name}")
+
+# Replace this with your directory path
+directory_path = r"D:\Desktop\Trash\ResultAuto\Results"
+
+list_files_to_excel(directory_path)

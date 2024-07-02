@@ -12,6 +12,7 @@ import pyautogui
 # Load your list of seat numbers and mothers' names from a CSV file
 data = pd.read_csv('seat_numbers.csv')  # Assuming your file is named seat_numbers.csv
 
+
 # URL of the results page
 base_url = "https://onlineresults.unipune.ac.in/Result/Dashboard/Default"
 
@@ -76,7 +77,7 @@ for index, row in data.iterrows():
         time.sleep(1)
 
         # Enter the seat number as the PDF name
-        pyautogui.write(f"result_{seat_number}")
+        pyautogui.write(f"{seat_number}")
         time.sleep(1)
         pyautogui.press('enter')
         time.sleep(3)  # Wait for the save dialog to close
